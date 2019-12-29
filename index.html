@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            #gridSquares {
+                display: grid;
+                width: 750px;
+                height: 750px;
+                background-color: grey;
+                padding; 25px;
+                margin: 0 auto; 
+                border-style: solid;
+                border-width: 5px;
+                border-color: blue;
+            }
+
+
+
+            .square {
+                background-color: white;
+            }
+
+            .selected{
+                background-color: black;
+            }
+
+        </style>
+        
+    </head>
+    <body>
+        <div id="buttonArea">
+            <button type="button" id="resetButton">Reset</button>
+        </div>
+        <div id="gridSquares">
+
+        </div>
+
+
+    </body>
+
+    <script>
+
+        function generateSizeString(num){
+            let str = '';
+
+            for (let x = 0; x < num; x++){
+                str = str.concat(`${Math.ceil(750/num)}px `)
+            }
+
+            return str;
+        }
+
+        function changeToSelected(){
+            let squareHover = document.getElementById("0")
+
+        }
+
+        function sayHello(){
+            console.log("Hello")
+            console.log(this.id)
+        }
+
+        function changeColor(){
+            let obj = document.getElementById(`${this.id}`)
+            obj.className += " selected"
+
+            //console.log(`${obj.className}`)
+        }
+
+        function resetDiv(){
+            let squares = document.getElementsByClassName("square")
+            for(let i = 0; i < squares.length; i++){
+                squares[i].className = "square"
+            }
+
+            let newSize = prompt("What is the size of the grid?")
+
+            generateGrid(newSize)
+        }
+
+        function generateGrid(size = 16){
+            //let size = 16;
+
+            let grid = document.getElementById("gridSquares");
+            grid.style["grid-template-columns"] = generateSizeString(size);
+            grid.style["grid-template-rows"] = generateSizeString(size);
+
+            grid.innerHTML = ''
+
+            let tempId = 0;
+            for(let x = 0; x < size; x++){
+                for(let y = 0; y < size; y++){
+                    let newDiv = document.createElement("div");
+                    newDiv.id = tempId;
+                    newDiv.className = "square"
+                    tempId++;
+
+                    newDiv.style.width = `${750/size}px`
+                    newDiv.style.height =  `${750/size}px`
+
+                    document.getElementById("gridSquares").appendChild(newDiv);
+                }
+            }
+
+            let squares = document.getElementsByClassName("square")
+            for(let i = 0; i < squares.length; i++){
+                squares[i].addEventListener('mouseover', changeColor, false)
+            }
+
+        }
+
+        generateGrid()
+
+
+
+        let resetButton = document.getElementById("resetButton")
+        resetButton.addEventListener('click', resetDiv, false)
+
+    </script>
+
+</html>
